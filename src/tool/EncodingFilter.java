@@ -1,4 +1,4 @@
-package filtter;
+package tool;
 
 public class EncodingFilter {
 
