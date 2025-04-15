@@ -2,6 +2,7 @@
 <%@page pageEncoding="UTF-8" %>
 <style>
    .sidebar {
+   			float: left;
             width: 200px;
             background-color: #f0f0f0;
             padding: 20px;
