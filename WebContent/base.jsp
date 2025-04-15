@@ -13,6 +13,7 @@
             margin-bottom: 10px;
         }
 </style>
+<div class=sidebar>
 <div class="navbar">
 	<ul class=nav>
     	<li><a href=point/scoremanager/main/menu.jsp>商品</a></li>
@@ -25,6 +26,7 @@
     	</li>
     	<li><a href="/point/scoremanager/main/subject_list.jsp">科目管理</a></li>
     </ul>
+</div>
 </div>
 
 <hr>
