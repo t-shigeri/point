@@ -22,6 +22,5 @@
 <%if (loggedInUser != null) { %>
 <a href="git/scoremanager/main/logout.jsp">ログアウト</a>
 <% } %>
-
 </body>
 </html>
