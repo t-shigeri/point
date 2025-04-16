@@ -4,7 +4,7 @@
    .sidebar {
    			float: left;
             width: 200px;
-            background-color: #f0f0f0;
+
             padding: 20px;
             height: 100vh;
         }
@@ -28,5 +28,3 @@
     </ul>
 </div>
 </div>
-
-<hr>

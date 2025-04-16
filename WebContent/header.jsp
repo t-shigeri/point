@@ -6,7 +6,7 @@
     <title>Servlet/JSP Samples</title>
     <style>
     h1{
-    	background-color: #bce2e8;
+    	background-color: #e6f2ff;
     	padding: 10px;
     }
     </style>
