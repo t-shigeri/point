@@ -3,7 +3,10 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.sql.DataSource;
+
 public class Dao {
+	protected DataSource ds;
 	/**
 	 * データベースへの接続を取得する
 	 *
