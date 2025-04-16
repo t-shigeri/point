@@ -1,4 +1,4 @@
-drop table customer if exists;
+drop table test if exists;
 
 CREATE TABLE TEST (
     STUDENT_NO VARCHAR(10),
@@ -9,4 +9,4 @@ CREATE TABLE TEST (
     CLASS_NUM VARCHAR(10),
     PRIMARY KEY (STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO)
 );
-INSERT INTO TEST VALUES ('2231111','A02','oom',1,100,'131');
+INSERT INTO test VALUES ('2231111','A02','oom',1,100,'131');

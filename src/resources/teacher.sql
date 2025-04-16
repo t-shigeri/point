@@ -1,4 +1,4 @@
-drop table customer if exists;
+drop table teacher if exists;
 
 CREATE TABLE TEACHER (
     ID VARCHAR(10) PRIMARY KEY,
@@ -7,4 +7,4 @@ CREATE TABLE TEACHER (
     SCHOOL_CD CHAR(3)
 );
 
-INSERT INTO TEACHER VALUES ('admin','password','大原花子','oom');
+INSERT INTO teacher VALUES ('admin','password','大原花子','oom');
