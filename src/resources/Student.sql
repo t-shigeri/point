@@ -15,3 +15,4 @@ INSERT INTO customer VALUES (NULL, 'ebihara', 'ShrimpField4');
 INSERT INTO customer VALUES (NULL, 'kanie', 'CrubBay5');
 INSERT INTO customer VALUES (NULL, '大原', 'Pass');
 );
+
