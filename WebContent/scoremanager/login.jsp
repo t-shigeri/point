@@ -13,7 +13,7 @@
 		<div class="title">
 			<h2>ログイン</h2>
 		</div>
-		<form action="" method="post">
+		<form action="LoginAction" method="post">
 			<!-- ログインID -->
 			<label for="ID">ID</label> <input type="text" id="id" name="id"
 				inputmode="latin" placeholder="半角でご入力ください" value="${id}"

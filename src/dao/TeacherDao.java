@@ -1,7 +1,9 @@
 package dao;
 
-import javax.servlet.http.HttpServlet;
+import bean.Teacher;
 
-public class TeacherDao extends HttpServlet {
-
+public class TeacherDao extends Dao {
+	public Teacher get(String id) {
+		return null;
+	}
 }

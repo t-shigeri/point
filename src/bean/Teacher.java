@@ -30,11 +30,11 @@ public class Teacher extends User {
 		this.name = name;
 	}
 
-	public String getSchool() {
-		return School;
+	public School getSchool() {
+		return school;
 	}
 
-	public void setSchool(String school) {
+	public void setSchool(School school) {
 		this.school = school;
 	}
 }
