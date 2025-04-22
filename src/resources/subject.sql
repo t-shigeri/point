@@ -1,4 +1,4 @@
-drop table customer if exists;
+drop table subject if exists;
 
 CREATE TABLE SUBJECT (
     SCHOOL_CD CHAR(10),
@@ -7,4 +7,4 @@ CREATE TABLE SUBJECT (
     PRIMARY KEY (SCHOOL_CD, CD)
 );
 
-INSERT INTO SUBJECT VALUES ('oom','A02','国語');
+INSERT INTO subject VALUES ('oom','A02','国語');

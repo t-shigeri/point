@@ -49,7 +49,6 @@
 <div class="main">
     <div class="title-box">学生一覧</div>
 
-    <!-- 🔽 絞り込みフォーム -->
     <div class="form-section">
         <form action="StudentListServlet" method="get">
             <label for="f1">入学年度:</label>
