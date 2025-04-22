@@ -10,8 +10,7 @@
     <meta charset="UTF-8">
     <title>学生一覧</title>
     <style>
-        .main {
-            flex: 1;
+       ;
             padding: 20px;
         }
         .title-box {
@@ -50,7 +49,7 @@
     <div class="title-box">学生一覧</div>
 
     <div class="form-section">
-        <form action="StudentListServlet" method="get">
+        <form action="student/list" method="get">
             <label for="f1">入学年度:</label>
             <select name="f1" id="f1">
                 <option value="">--選択--</option>

@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import tool.Action;
 
-public class LogoutAction implements Action {
+public class LogoutAction extends Action {
 	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		return null;
 	}
 }

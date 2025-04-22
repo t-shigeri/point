@@ -1,4 +1,5 @@
 package bean;
+
 public class Student {
     private String studentId;
     private String name;
@@ -38,4 +39,3 @@ public class Student {
     public String getClassName() { return className; }
     public void setClassName(String className) { this.className = className; }
 }
-
