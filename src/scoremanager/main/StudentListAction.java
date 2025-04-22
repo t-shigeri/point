@@ -29,12 +29,11 @@ public class StudentListAction extends HttpServlet {
         // 学生一覧を取得（フィルタリングが必要な場合）
         List<Student> studentList = studentDao.findAll(enrollmentYear, classId, isEnrolled);
 
-        // 年度やクラスの選択肢を取得する..........................
+        // 年度やクラスの選択肢を取得する
         List<Integer> enrollmentYears = studentDao.getEnrollmentYears();
         List<String> classList = studentDao.getClassList();
 
         // リクエスト属性にデータをセット
-
         request.setAttribute("studentList", studentList);
         request.setAttribute("enrollmentYears", enrollmentYears);
         request.setAttribute("classList", classList);
