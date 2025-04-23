@@ -18,7 +18,10 @@ public class StudentDao {
         } catch (ClassNotFoundException e) {
             throw new SQLException("H2ドライバのロードに失敗しました", e);
         }
-        return DriverManager.getConnection("jdbc:h2:~/tanaka", "sa", "");
+        return DriverManager.getConnection("jdbc:h2:tcp://localhost/~/tanaka", "sa", "");
+
+
+
     }
 
     // 学生の一覧取得（フィルタリング対応）
@@ -39,25 +42,25 @@ public class StudentDao {
         sql += " ORDER BY ENT_YEAR DESC, NO";
 
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement request = conn.prepareStatement(sql)) { // ← request に変更
 
             int index = 1;
             if (enrollmentYear != null && !enrollmentYear.isEmpty()) {
-                ps.setInt(index++, Integer.parseInt(enrollmentYear));
+                request.setInt(index++, Integer.parseInt(enrollmentYear));
             }
             if (classId != null && !classId.isEmpty()) {
-                ps.setString(index++, classId);
+                request.setString(index++, classId);
             }
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet response = request.executeQuery()) { // ← response に変更
+                while (response.next()) {
                     Student student = new Student();
-                    student.setStudentId(rs.getString("NO"));
-                    student.setName(rs.getString("NAME"));
-                    student.setEnrollmentYear(rs.getInt("ENT_YEAR"));
-                    student.setClassId(rs.getString("CLASS_NUM"));
-                    student.setClassName(rs.getString("CLASS_NUM"));
-                    student.setEnrolled(rs.getBoolean("IS_ATTEND"));
+                    student.setStudentId(response.getString("NO"));
+                    student.setName(response.getString("NAME"));
+                    student.setEnrollmentYear(response.getInt("ENT_YEAR"));
+                    student.setClassId(response.getString("CLASS_NUM"));
+                    student.setClassName(response.getString("CLASS_NUM"));
+                    student.setEnrolled(response.getBoolean("IS_ATTEND"));
                     students.add(student);
                 }
             }
@@ -67,15 +70,16 @@ public class StudentDao {
         return students;
     }
 
+
     // 入学年度の一覧を取得
     public List<Integer> getEnrollmentYears() {
         List<Integer> years = new ArrayList<>();
         String sql = "SELECT DISTINCT ENT_YEAR FROM STUDENT ORDER BY ENT_YEAR DESC";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                years.add(rs.getInt("ENT_YEAR"));
+             ResultSet rsponse = ps.executeQuery()) {
+            while (rsponse.next()) {
+                years.add(rsponse.getInt("ENT_YEAR"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,9 +93,9 @@ public class StudentDao {
         String sql = "SELECT DISTINCT CLASS_NUM FROM STUDENT ORDER BY CLASS_NUM";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                classes.add(rs.getString("CLASS_NUM"));
+             ResultSet rsponse = ps.executeQuery()) {
+            while (rsponse.next()) {
+                classes.add(rsponse.getString("CLASS_NUM"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

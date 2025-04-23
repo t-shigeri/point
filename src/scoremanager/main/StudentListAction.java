@@ -39,6 +39,8 @@ public class StudentListAction extends HttpServlet {
         request.setAttribute("classList", classList);
 
         // 学生一覧画面へフォワード
+        System.out.println("Forwarding to: /scoremanager/main/student_list.jsp");
+
         request.getRequestDispatcher("/scoremanager/main/student_list.jsp").forward(request, response);
     }
 }

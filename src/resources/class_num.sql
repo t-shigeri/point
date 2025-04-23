@@ -1,7 +1,0 @@
-drop table class_num if exists;
-
-CREATE TABLE CLASS_NUM(
-    SCHOOL_CD CHAR(3),
-    CLASS_NUM VARCHAR(5),
-    PRIMARY KEY(SCHOOL_CD, CLASS_NUM)
-);

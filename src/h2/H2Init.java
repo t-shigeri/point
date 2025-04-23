@@ -12,7 +12,7 @@ public class H2Init {
 
     // H2データベースのファイル保存パス
 
-	private static final String JDBC_URL = "jdbc:h2:~/score"; // TCPモード
+	private static final String JDBC_URL = "jdbc:h2:~/tanaka"; // TCPモード
 
 	private static final String USER = "sa";
 
