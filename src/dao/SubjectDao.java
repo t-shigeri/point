@@ -10,61 +10,120 @@ import bean.School;
 import bean.Subject;
 public class SubjectDao extends Dao{
 
-public Subject get(String cd,Shcool school){
-//	データベースと接続
-    Connection con = getConnection();
 
-	return null;
+
+
+
+
+
+
+public Subject get(String cd, School school) throws Exception {
+
+Subject subject = null;
+	try {
+Connection con = getConnection();
+String sql = "SELECT * FROM SUBJECT WHERE CD = ? AND SCHOOL_CD = ?";
+PreparedStatement st = con.prepareStatement(sql);
+st.setString(1, cd);
+st.setString(2, school.getCd());
+
+ResultSet rs = st.executeQuery();
+if (rs.next()) {
+subject = new Subject();
+subject.setCd(rs.getString("CD"));
+subject.setName(rs.getString("NAME"));
+subject.setSchool(school);
 }
-public List<Product> search(String keyword) throws Exception {
-    // ① 検索結果を格納するリストを作成
-    List<Product> list = new ArrayList<>();
+st.close();
+con.close();
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+return subject;
+}
 
-    // ② データベース接続を取得（DAOクラスの getConnection() を利用）
+
+
+
+
+public boolean save(Subject subject) throws Exception {
+int f = 0;
+try{
+Connection con = getConnection();
+
+String sql = "MERGE INTO SUBJECT (SCHOOL_CD, CD, NAME) VALUES (?, ?, ?)";
+PreparedStatement st = con.prepareStatement(sql);
+st.setString(1, subject.getSchool().getCd());
+st.setString(2, subject.getCd());
+st.setString(3, subject.getName());
+
+f = st.executeUpdate();
+st.close();
+con.close();
+}catch(SQLException e) {
+e.printStackTrace();
+return false;
+}
+return f > 0;
+}
+
+
+
+
+public List<Subject> filter(School school) throws Exception {
+    List<Subject> list = new ArrayList<>();
+try{
     Connection con = getConnection();
+    String sql = "SELECT * FROM SUBJECT WHERE SCHOOL_CD = ?";
+    PreparedStatement st = con.prepareStatement(sql);
+    st.setString(1, school.getCd());
 
-    // ③ SQL文の準備（商品名にキーワードが含まれるものを検索）
-    PreparedStatement st = con.prepareStatement(
-        "SELECT * FROM product WHERE name LIKE ?");
-    // ④ プレースホルダ `?` にキーワードをセット（% を付けて部分一致検索にする）
-    st.setString(1, "%" + keyword + "%");
-
-    // ⑤ SQL文を実行し、結果を取得
     ResultSet rs = st.executeQuery();
-
-    // ⑥ 検索結果のデータを1件ずつ Product オブジェクトに変換してリストに追加
     while (rs.next()) {
-        Product p = new Product();
-        p.setId(rs.getInt("id"));       // ID を設定
-        p.setName(rs.getString("name")); // 名前を設定
-        p.setPrice(rs.getInt("price"));  // 価格を設定
-        list.add(p);  // 作成したオブジェクトをリストに追加
+        Subject subject = new Subject();
+        subject.setCd(rs.getString("CD"));
+        subject.setName(rs.getString("NAME"));
+        subject.setSchool(school);
+        list.add(subject);
     }
-    // ⑦ 使用したリソースを解放（PreparedStatement と Connection を閉じる）
+
     st.close();
     con.close();
-
-    // ⑧ 検索結果のリストを呼び出し元に返す
+}catch(SQLException e) {
+e.printStackTrace();
+}
     return list;
 }
-public boolean save(Subject subject){
-	try {
-    Connection con = getConnection();
-    PreparedStatement st = con.prepareStatement(
-            "INSERT INTO STUDENT (SCHOOL_CD, CD, NAME) VALUES (?, ?, ?)");
-        st.setSchool(1, subject.getSchool());
-        st.setString(2, subject.getCd());
-        st.setString(2, subject.getName());
-        st.executeUpdate();
 
-        st.close();
-        con.close();
-	} catch (SQLException e) {
-		return false;
-	}
-	return true;
+
+
+
+
+
+public boolean delete(Subject subject) throws Exception {
+int f=0;
+try{
+Connection con = getConnection();
+
+String sql = "DELETE FROM SUBJECT WHERE CD = ? AND SCHOOL_CD = ?";
+PreparedStatement st = con.prepareStatement(sql);
+st.setString(1, subject.getCd());
+st.setString(2, subject.getSchool().getCd());
+
+f = st.executeUpdate();
+st.close();
+con.close();
+}catch(SQLException e) {
+e.printStackTrace();
+return false;
 }
-public List<Subject> filter(School school){
-	return null;
+return f > 0;
 }
+
+
+
 }
+
+
+
+
