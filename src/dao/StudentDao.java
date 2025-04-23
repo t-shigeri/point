@@ -62,6 +62,8 @@ public class StudentDao {
                     student.setClassName(response.getString("CLASS_NUM"));
                     student.setEnrolled(response.getBoolean("IS_ATTEND"));
                     students.add(student);
+
+
                 }
             }
         } catch (SQLException e) {
@@ -101,5 +103,21 @@ public class StudentDao {
             e.printStackTrace();
         }
         return classes;
+    }
+
+    public void createStudent(Student student) {
+        String sql = "INSERT INTO STUDENT (NO, NAME, ENT_YEAR, CLASS_NUM, IS_ATTEND, SCHOOL_CD) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, student.getStudentId());
+            ps.setString(2, student.getName());
+            ps.setInt(3, student.getEnrollmentYear());
+            ps.setString(4, student.getClassId());
+            ps.setBoolean(5, student.isEnrolled());
+            ps.setString(6, student.getClassName());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
