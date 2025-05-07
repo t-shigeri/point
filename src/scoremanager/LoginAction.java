@@ -1,13 +1,16 @@
 package scoremanager;
 
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tool.Action;
-
-public class LoginAction extends Action {
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        req.getRequestDispatcher("login.jsp").forward(req, res);
+public class LoginAction extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher("/jsp/login.jsp");
+        rd.forward(request, response);
     }
 }
