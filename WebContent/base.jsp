@@ -13,18 +13,19 @@
             margin-bottom: 10px;
         }
 </style>
-<div class=sidebar>
-<div class="navbar">
-	<ul class=nav>
-    	<li><a href=point/scoremanager/main/menu.jsp>商品</a></li>
-    	<li><a href="point/scoremanager/main/student_list.jsp">学生管理</a></li>
-    	<li>成績管理
-    	<ul>
-    	<li><a href="point/scoremanager/main/test_regist.jsp">成績登録</a></li>
-    	<li><a href="/point/scoremanager/main/test_list.jsp">成績参照</a></li>
-    	</ul>
-    	</li>
-    	<li><a href="/point/scoremanager/main/subject_list.jsp">科目管理</a></li>
+<div class="sidebar">
+  <div class="navbar">
+    <ul class="nav">
+      <li><a href="/point/scoremanager/main/menu.jsp">メニュー</a></li>
+      <li><a href="/point/scoremanager/main/student_list.jsp">学生管理</a></li>
+      <li>
+        <span>成績管理</span>
+        <ul>
+          <li><a href="/point/scoremanager/main/test_regist.jsp">成績登録</a></li>
+          <li><a href="/point/scoremanager/main/test_list.jsp">成績参照</a></li>
+        </ul>
+      </li>
+      <li><a href="/point/scoremanager/main/subject_list.jsp">科目管理</a></li>
     </ul>
-</div>
+  </div>
 </div>
