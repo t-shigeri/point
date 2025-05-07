@@ -3,6 +3,7 @@ package scoremanager;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
 import dao.TeacherDao;
-
+@WebServlet("scoremanager/main/LoginExecuteAction.action")
 public class LoginExecuteAction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
@@ -25,7 +26,7 @@ public class LoginExecuteAction extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("teacher", teacher);
-            response.sendRedirect("");
+            response.sendRedirect("menu.jsp");
         }
     }
 }

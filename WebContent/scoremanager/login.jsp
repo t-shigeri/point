@@ -18,7 +18,7 @@
         <div class="title">
             <h2>ログイン</h2>
         </div>
-        <form action="/LoginExecuteAction" method="post">
+        <form action="LoginExecuteAction" method="post">
             <!-- ログインID -->
             <label for="ID">ID</label>
             <input type="text" id="id" name="id" style="ime-mode: disabled;" placeholder="半角でご入力ください" value="${id}" maxlength="10" required>
