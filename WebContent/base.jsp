@@ -25,7 +25,7 @@
           <li><a href="/point/scoremanager/main/test_list.jsp">成績参照</a></li>
         </ul>
       </li>
-      <li><a href="/point/scoremanager/main/subject_list.jsp">科目管理</a></li>
+      <li><a href="/point/scoremanager/main/subject_list.action">科目管理</a></li>
     </ul>
   </div>
 </div>

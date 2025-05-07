@@ -69,6 +69,38 @@ return f > 0;
 
 
 
+public List<Subject> findAll() throws Exception {
+    List<Subject> list = new ArrayList<>();
+
+    Connection con = getConnection();
+
+    String sql = "SELECT s.CD, s.NAME, s.SCHOOL_CD, sc.NAME as SCHOOL_NAME " +
+            "FROM SUBJECT s " +
+            "LEFT JOIN SCHOOL sc ON s.SCHOOL_CD = sc.CD";
+
+    PreparedStatement st = con.prepareStatement(sql);
+    ResultSet rs = st.executeQuery();
+
+    while (rs.next()) {
+        Subject subject = new Subject();
+        subject.setCd(rs.getString("CD"));
+        subject.setName(rs.getString("NAME"));
+
+        School school = new School();
+        school.setCd(rs.getString("SCHOOL_CD"));
+        school.setName(rs.getString("SCHOOL_NAME"));
+
+        subject.setSchool(school);
+
+        list.add(subject);
+    }
+
+    rs.close();
+    st.close();
+    con.close();
+
+    return list;
+}
 
 public List<Subject> filter(School school) throws Exception {
     List<Subject> list = new ArrayList<>();
