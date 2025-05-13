@@ -1,19 +1,16 @@
 package scoremanager;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
 import dao.TeacherDao;
-@WebServlet("scoremanager/main/LoginExecuteAction.action")
-public class LoginExecuteAction extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+import tool.Action;
+
+public class LoginExecuteAction extends Action {
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 

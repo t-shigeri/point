@@ -33,7 +33,7 @@ public class FrontController extends HttpServlet {
                 action = new LoginExecuteAction();
                 break;
             default:
-                request.getRequestDispatcher("error.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
                 return;
         }
 
@@ -41,7 +41,7 @@ public class FrontController extends HttpServlet {
             action.execute(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
         }
     }
 }

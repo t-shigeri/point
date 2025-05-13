@@ -4,6 +4,27 @@
                       https://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
+
+<servlet>
+    <servlet-name>LoginAction</servlet-name>
+    <servlet-class>scoremanager.LoginAction</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>LoginAction</servlet-name>
+    <url-pattern>/login</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>FrontController</servlet-name>
+    <servlet-class>tool.FrontController</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>FrontController</servlet-name>
+    <url-pattern>*.action</url-pattern>
+</servlet-mapping>
+
 	<!-- コンテキストルートのウェルカムページを設定 -->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
