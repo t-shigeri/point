@@ -17,7 +17,7 @@
   <div class="navbar">
     <ul class="nav">
       <li><a href="/point/scoremanager/main/menu.jsp">メニュー</a></li>
-      <li><a href="/point/scoremanager/main/student_list.jsp">学生管理</a></li>
+      <li><a href="/point/scoremanager/main/studentListAction.jsp">学生管理</a></li>
       <li>
         <span>成績管理</span>
         <ul>

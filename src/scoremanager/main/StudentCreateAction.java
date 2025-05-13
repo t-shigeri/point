@@ -1,5 +1,4 @@
 package scoremanager.main;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -15,22 +14,46 @@ import dao.StudentDao;
 public class StudentCreateAction extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/jsp/student_create.jsp").forward(request, response);
+    /**
+     * GETリクエスト処理 - 新規登録画面を表示する
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 学生新規登録画面（student_create.jsp）にフォワード
+        request.getRequestDispatcher("/scoremanager/main/student_create.jsp").forward(request, response); // 修正した部分
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String enrollmentYear = request.getParameter("enrollmentYear");
-        String studentId = request.getParameter("studentId");
-        String name = request.getParameter("name");
-        String className = request.getParameter("className");
-        boolean enrolled = Boolean.parseBoolean(request.getParameter("enrolled"));
-        String schoolCd = request.getParameter("schoolCd"); // SCHOOL_CD をフォームから取得
+    /**
+     * POSTリクエスト処理 - フォームから送信された学生情報をDBに登録する
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        Student student = new Student(studentId, name, Integer.parseInt(enrollmentYear), className, enrolled, schoolCd);
-        StudentDao studentDAO = new StudentDao();
-        studentDAO.createStudent(student);
+        // フォームから送信された各パラメータを取得
+        String enrollmentYear = request.getParameter("enrollmentYear"); // 入学年度（例: 2023）
+        String studentId = request.getParameter("studentId");           // 学生番号（例: A001）
+        String name = request.getParameter("name");                     // 氏名（例: 山田太郎）
+        String className = request.getParameter("className");           // クラス名（例: 1年A組）
+        boolean enrolled = request.getParameter("enrolled") != null;   // チェックボックスがチェックされていれば在学中
+        String schoolCd = request.getParameter("schoolCd");             // 学校コード（例: S001）
 
-        response.sendRedirect("student_create_done.jsp");
+        // Studentオブジェクトを生成（データベース登録用）
+        Student student = new Student(
+            studentId,
+            name,
+            Integer.parseInt(enrollmentYear),
+            className,
+            enrolled,
+            schoolCd
+        );
+
+        // DAOを使ってDBに登録処理を実行
+        StudentDao studentDao = new StudentDao();
+        studentDao.createStudent(student);
+
+        // 登録完了画面へリダイレクト（リロードで再登録されるのを防ぐ）
+        response.sendRedirect(request.getContextPath() + "/student_create_done");
     }
 }

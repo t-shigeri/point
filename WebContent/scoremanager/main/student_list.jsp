@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -7,49 +8,51 @@
 <head>
 <%@ include file="../../header.jsp" %>
 <%@ include file="../../base.jsp" %>
-    <meta charset="UTF-8">
-    <title>学生一覧</title>
-    <style>
-       ;
-            padding: 20px;
-        }
-        .title-box {
-            background-color: #e6f2ff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-        .form-section {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #fff;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f0f0f0;
-        }
-        .right-align {
-            float: right;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>学生一覧</title>
+
+<style>
+    .main {
+        padding: 20px;
+    }
+    .title-box {
+        background-color: #e6f2ff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    .form-section {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #fff;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px 10px;
+        text-align: center;
+    }
+    th {
+        background-color: #f0f0f0;
+    }
+    .right-align {
+        float: right;
+    }
+</style>
 </head>
+
 <body>
 <div class="main">
     <div class="title-box">学生一覧</div>
 
     <div class="form-section">
-        <form action="student/list" method="get">
+        <form action="list" method="get">
             <label for="f1">入学年度:</label>
             <select name="f1" id="f1">
                 <option value="">--選択--</option>
@@ -72,7 +75,9 @@
             </label>
 
             <button type="submit">絞り込み</button>
-            <span class="right-align"><a href="student_create.jsp">新規登録</a></span>
+            <span class="right-align">
+                <a href="${pageContext.request.contextPath}/student_create">新規登録</a>
+            </span>
         </form>
     </div>
 
@@ -116,5 +121,6 @@
     </c:choose>
 </div>
 </body>
+
 <%@ include file="../../footer.jsp" %>
 </html>
