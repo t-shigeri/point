@@ -10,7 +10,7 @@ import tool.Action;
 
 public class LoginExecuteAction extends Action {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
@@ -25,5 +25,6 @@ public class LoginExecuteAction extends Action {
             session.setAttribute("teacher", teacher);
             response.sendRedirect("menu.jsp");
         }
+		return password;
     }
 }
