@@ -36,7 +36,6 @@
     <url-pattern>/SubjectList.action</url-pattern>
 </servlet-mapping>
 
-
 <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>action.LoginAction</servlet-class>
@@ -45,6 +44,17 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login.action</url-pattern>
 </servlet-mapping>
+
+<servlet>
+    <servlet-name>LoginExecute</servlet-name>
+    <servlet-class>action.LoginExecuteAction</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>LoginExecute</servlet-name>
+    <url-pattern>/LoginExecute.action</url-pattern>
+</servlet-mapping>
+
 
 
 	<!-- （ここから↓）次の内容をweb.xmlに追加する -->

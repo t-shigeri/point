@@ -19,12 +19,12 @@ public class LoginExecuteAction extends Action {
 
         if (teacher == null) {
             request.setAttribute("error", "IDまたはパスワードが確認できませんでした");
-            request.getRequestDispatcher("/scremanager/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/scoremanager/login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("teacher", teacher);
             response.sendRedirect("menu.jsp");
         }
-		return null;
+        return null;
     }
 }
