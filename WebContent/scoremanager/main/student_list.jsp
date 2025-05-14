@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -12,21 +11,32 @@
 <title>学生一覧</title>
 
 <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh; /* 全体の高さを100vhに設定 */
+        padding: 20px;
+    }
     .main {
         padding: 20px;
+        margin-bottom: 20px;
     }
     .title-box {
         background-color: #e6f2ff;
         padding: 10px 20px;
         border-radius: 5px;
         font-size: 1.5em;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     .form-section {
         background-color: #f9f9f9;
-        padding: 15px;
+        padding: 10px 15px; /* パディングを減らしてコンパクトに */
         border-radius: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 10px; /* フォームと一覧を近づける */
     }
     table {
         border-collapse: collapse;
@@ -44,13 +54,16 @@
     .right-align {
         float: right;
     }
+    .student-section {
+        display: grid;
+    }
 </style>
 </head>
 
 <body>
-<div class="main">
-    <div class="title-box">学生一覧</div>
-
+<div class="container">
+  <div class="title-box">学生一覧</div>
+    <!-- 絞り込みフォーム -->
     <div class="form-section">
         <form action="list" method="get">
             <label for="f1">入学年度:</label>
@@ -81,44 +94,49 @@
         </form>
     </div>
 
-    <p>検索結果: <c:out value="${fn:length(studentList)}" /> 件</p>
+    <!-- 学生一覧の表示 -->
+    <div class="main">
 
-    <c:choose>
-        <c:when test="${not empty studentList}">
-            <table>
-                <thead>
-                    <tr>
-                        <th>入学年度</th>
-                        <th>学生番号</th>
-                        <th>氏名</th>
-                        <th>クラス</th>
-                        <th>在学中</th>
-                        <th>変更</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="student" items="${studentList}">
+
+        <p>検索結果: <c:out value="${fn:length(studentList)}" /> 件</p>
+
+        <c:choose>
+            <c:when test="${not empty studentList}">
+                <table>
+                    <thead>
                         <tr>
-                            <td>${student.enrollmentYear}</td>
-                            <td>${student.studentId}</td>
-                            <td>${student.name}</td>
-                            <td>${student.className}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${student.enrolled}">〇</c:when>
-                                    <c:otherwise>×</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td><a href="update?id=${student.studentId}">変更</a></td>
+                            <th>入学年度</th>
+                            <th>学生番号</th>
+                            <th>氏名</th>
+                            <th>クラス</th>
+                            <th>在学中</th>
+                            <th>変更</th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:when>
-        <c:otherwise>
-            <p>該当する学生情報はありません。</p>
-        </c:otherwise>
-    </c:choose>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="student" items="${studentList}">
+                            <tr>
+                                <td>${student.enrollmentYear}</td>
+                                <td>${student.studentId}</td>
+                                <td>${student.name}</td>
+                                <td>${student.className}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${student.enrolled}">〇</c:when>
+                                        <c:otherwise>×</c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td><a href="update?id=${student.studentId}">変更</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:when>
+            <c:otherwise>
+                <p>該当する学生情報はありません。</p>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
 </body>
 
