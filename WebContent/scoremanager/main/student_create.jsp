@@ -6,49 +6,73 @@
 <head>
 <%@ include file="../../header.jsp" %>
 <%@ include file="../../base.jsp" %>
-    <meta charset="UTF-8">
-    <title>学生登録</title>
-    <style>
-        .main {
-            padding: 20px;
-        }
-        .title-box {
-            background-color: #e6f2ff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-        .form-section {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            border: 1px: 4px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>学生登録</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+    }
+
+    .title-box {
+        background-color: #e6f2ff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .form-section {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
+
 <body>
-<div class="main">
+<div class="container">
     <div class="title-box">学生登録</div>
 
     <div class="form-section">
@@ -76,5 +100,6 @@
     </div>
 </div>
 </body>
+
 <%@ include file="../../footer.jsp" %>
 </html>
