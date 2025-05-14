@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * フロントコントローラ (Front Controller)
  * すべてのリクエストを一元管理し、適切なアクションクラスを実行する
  */
-@WebServlet(urlPatterns={"*.action"}) // .actionで終わるURLをこのサーブレットで処理
+@WebServlet(urlPatterns={"*.action"})// .actionで終わるURLをこのサーブレットで処理
 public class FrontController extends HttpServlet {
 
     /**
@@ -27,13 +27,10 @@ public class FrontController extends HttpServlet {
     	System.out.println("Frontcontroller!");
         PrintWriter out = response.getWriter();
         try {
-            // ① リクエストされたURLのパスを取得
-            String path = request.getServletPath().substring(1);
-            // 例: "/chapter23/Search.action" → "chapter23/Search.action"
-
-            // ② パスをアクションクラス名の形式に変換
-            String name = path.replace(".a", "A").replace('/', '.');
-            // 例: "chapter23/Search.action" → "chapter23.SearchAction"
+        	String path = request.getServletPath().substring(1);
+        	// 例: "scoremanager/Login.action"
+        	String name = path.replace(".a", "A").replace('/', '.');
+        	// 結果: "scoremanager.LoginAction"
 
             // ③ アクションクラスのインスタンスを動的に生成
             Action action = (Action)Class.forName(name).

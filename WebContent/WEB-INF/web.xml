@@ -35,6 +35,18 @@
     <servlet-name>SubjectListAction</servlet-name>
     <url-pattern>/SubjectList.action</url-pattern>
 </servlet-mapping>
+
+
+<servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>action.LoginAction</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login.action</url-pattern>
+</servlet-mapping>
+
+
 	<!-- （ここから↓）次の内容をweb.xmlに追加する -->
 	<!-- <filter> -->
 	<!-- <filter-name>hellofilter</filter-name> -->

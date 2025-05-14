@@ -1,4 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% request.setCharacterEncoding("UTF-8"); %>
+
+
+
 
 <%@ include file="../header.jsp"%>
 <script>
@@ -12,13 +16,17 @@
         }
     }
 </script>
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+</head>
 
 <body>
     <div class="login">
         <div class="title">
             <h2>ログイン</h2>
         </div>
-        <form action="controller?action=login_execute" method="post">
+        <form action="LoginExecute.action" method="post">
             <!-- ログインID -->
             <label for="ID">ID</label>
             <input type="text" id="id" name="id" style="ime-mode: disabled;" placeholder="半角でご入力ください" value="${id}" maxlength="10" required>
