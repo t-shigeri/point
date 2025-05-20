@@ -38,7 +38,7 @@
 
 <servlet>
     <servlet-name>Login</servlet-name>
-    <servlet-class>action.LoginAction</servlet-class>
+    <servlet-class>scoremanager.LoginAction</servlet-class>
 </servlet>
 <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -47,13 +47,14 @@
 
 <servlet>
     <servlet-name>LoginExecute</servlet-name>
-    <servlet-class>action.LoginExecuteAction</servlet-class>
+    <servlet-class>scoremanager.LoginExecuteAction</servlet-class>
 </servlet>
-
 <servlet-mapping>
     <servlet-name>LoginExecute</servlet-name>
     <url-pattern>/LoginExecute.action</url-pattern>
 </servlet-mapping>
+
+
 
 
 

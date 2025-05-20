@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-
-
 
 
 <%@ include file="../header.jsp"%>
@@ -26,9 +25,16 @@
         <div class="title">
             <h2>ログイン</h2>
         </div>
-        <form action="LoginExecute.action" method="post">
+
+            <!-- エラーメッセージの表示 -->
+        <c:if test="${not empty error}">
+            <p style="color: red;">${error}</p>
+        </c:if>
+
+
+        <form action="${pageContext.request.contextPath}/LoginExecute.action" method="post">
             <!-- ログインID -->
-            <label for="ID">ID</label>
+            <label for="id">ID</label>
             <input type="text" id="id" name="id" style="ime-mode: disabled;" placeholder="半角でご入力ください" value="${id}" maxlength="10" required>
 
             <!-- パスワード -->

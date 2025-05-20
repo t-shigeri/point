@@ -1,16 +1,21 @@
 package scoremanager;
 
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
 import dao.TeacherDao;
-import tool.Action;
 
-public class LoginExecuteAction extends Action {
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+public class LoginExecuteAction extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
@@ -19,12 +24,12 @@ public class LoginExecuteAction extends Action {
 
         if (teacher == null) {
             request.setAttribute("error", "IDまたはパスワードが確認できませんでした");
-            request.getRequestDispatcher("/scoremanager/login.jsp").forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("/scoremanager/login.jsp");
+            rd.forward(request, response);
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("teacher", teacher);
-            response.sendRedirect("menu.jsp");
+            response.sendRedirect(request.getContextPath() + "/scoremanager/main/menu.jsp");
         }
-        return null;
     }
 }

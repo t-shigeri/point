@@ -9,26 +9,26 @@ import bean.Teacher;
 public class TeacherDao extends Dao {
 
 	public Teacher login(String id, String password) {
-	    Teacher teacher = null;
+		Teacher teacher = null;
 
-	    try (Connection conn = getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(
-	             "SELECT * FROM teachers WHERE id = ? AND password = ?")) {
+		try (Connection conn = getConnection();
+				PreparedStatement stmt = conn
+						.prepareStatement("SELECT * FROM TEACHER WHERE id = ? AND password = ?")) {
 
-	        stmt.setString(1, id);
-	        stmt.setString(2, password);
+			stmt.setString(1, id);
+			stmt.setString(2, password);
 
-	        ResultSet rs = stmt.executeQuery();
-	        if (rs.next()) {
-	            teacher = new Teacher();
-	            teacher.setId(rs.getString("id"));
-	            teacher.setName(rs.getString("name"));
-	            // 他のプロパティもセット
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				teacher = new Teacher();
+				teacher.setId(rs.getString("id"));
+				teacher.setName(rs.getString("name"));
+				// 他のプロパティもセット
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-	    return teacher;
+		return teacher;
 	}
 }

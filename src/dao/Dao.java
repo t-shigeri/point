@@ -25,7 +25,7 @@ public class Dao {
 		// );
 
 		// H2データベースの組込モード（Embedded）
-		return DriverManager.getConnection("jdbc:h2:~/tanaka", // H2データベースのローカルファイルを使用
+		return DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/~/tanaka", // H2データベースのローカルファイルを使用
 				"sa", // ユーザー名
 				"" // パスワード（デフォルトは空）
 		);
