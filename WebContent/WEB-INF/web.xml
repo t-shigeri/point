@@ -54,6 +54,15 @@
     <url-pattern>/LoginExecute.action</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>scoremanager.main.LogoutAction</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout.action</url-pattern>
+</servlet-mapping>
+
 
 
 

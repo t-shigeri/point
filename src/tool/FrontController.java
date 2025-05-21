@@ -13,49 +13,43 @@ import javax.servlet.http.HttpServletResponse;
  * フロントコントローラ (Front Controller)
  * すべてのリクエストを一元管理し、適切なアクションクラスを実行する
  */
-@WebServlet(urlPatterns={"*.action"})// .actionで終わるURLをこのサーブレットで処理
+@WebServlet(urlPatterns={"*.action"}) // .actionで終わるURLをこのサーブレットで処理
 public class FrontController extends HttpServlet {
 
     /**
      * POSTリクエストの処理
-     * - リクエストのパスを取得し、対応するアクションクラスを動的にロード
-     * - executeメソッドを実行し、戻り値のURLへフォワード
      */
     public void doPost(
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-    	System.out.println("Frontcontroller!");
+        System.out.println("Frontcontroller!");
+
+        // ★★★ ここでリクエストの文字エンコーディングをUTF-8に指定 ★★★
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+
         PrintWriter out = response.getWriter();
         try {
-        	String path = request.getServletPath().substring(1);
-        	// 例: "scoremanager/Login.action"
-        	String name = path.replace(".a", "A").replace('/', '.');
-        	// 結果: "scoremanager.LoginAction"
+            String path = request.getServletPath().substring(1);
+            String name = path.replace(".a", "A").replace('/', '.');
 
-            // ③ アクションクラスのインスタンスを動的に生成
-            Action action = (Action)Class.forName(name).
-                getDeclaredConstructor().newInstance();
-            // クラスを動的ロードし、コンストラクタを呼び出してインスタンスを作成
+            Action action = (Action)Class.forName(name)
+                .getDeclaredConstructor().newInstance();
 
-            // ④ executeメソッドを実行し、フォワード先のURLを取得
             String url = action.execute(request, response);
-            // 例: "/searchResult.jsp" など
-
-            // ⑤ 指定されたURLへフォワード
             request.getRequestDispatcher(url).forward(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace(out); // エラー発生時はスタックトレースを出力
+            e.printStackTrace(out);
         }
     }
 
     /**
      * GETリクエストの処理
-     * - doPostメソッドを呼び出して、POSTリクエストと同じ処理を実行
      */
     public void doGet(
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        doPost(request, response); // GETリクエストもPOSTと同様に処理
+        doPost(request, response);
     }
 }

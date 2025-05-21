@@ -12,15 +12,15 @@
     </style>
 </head>
 <body class="bg-light">
+	<div id="title">
     <h1>得点管理システム</h1>
-<%
-    String loggedInUser = (String) session.getAttribute("userName");
-%>
-<span>
-<%= loggedInUser != null ? loggedInUser +"様" : "" %>
-</span>
-<%if (loggedInUser != null) { %>
-<a href="git/scoremanager/main/logout.jsp">ログアウト</a>
-<% } %>
+    </div>
+    <%
+        String username = (String) session.getAttribute("name");
+    %>
+    ${teacher.name}
+
+<a href="Logout.action">ログアウト</a>
+
 </body>
 </html>
