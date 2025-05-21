@@ -9,31 +9,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * フロントコントローラ (Front Controller)
- * すべてのリクエストを一元管理し、適切なアクションクラスを実行する
- */
-@WebServlet(urlPatterns={"*.action"}) // .actionで終わるURLをこのサーブレットで処理
+@WebServlet(urlPatterns = {"*.action"})
 public class FrontController extends HttpServlet {
 
-    /**
-     * POSTリクエストの処理
-     */
-    public void doPost(
-        HttpServletRequest request, HttpServletResponse response
-    ) throws ServletException, IOException {
-        System.out.println("Frontcontroller!");
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        System.out.println("FrontController invoked");
 
-        // ★★★ ここでリクエストの文字エンコーディングをUTF-8に指定 ★★★
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-        try {
-            String path = request.getServletPath().substring(1);
-            String name = path.replace(".a", "A").replace('/', '.');
 
-            Action action = (Action)Class.forName(name)
+        try {
+            // 例: /student/logout.action → logout → LogoutAction
+            String path = request.getServletPath(); // e.g. /student/logout.action
+            String[] parts = path.split("/");
+            String lastPart = parts[parts.length - 1]; // logout.action
+            String base = lastPart.replace(".action", ""); // logout
+            String className = base.substring(0, 1).toUpperCase() + base.substring(1) + "Action"; // LogoutAction
+
+            // パッケージ名を固定 (LogoutActionは scoremanager.main パッケージにあるため)
+            String fullClassName = "scoremanager.main." + className;
+
+            Action action = (Action) Class.forName(fullClassName)
                 .getDeclaredConstructor().newInstance();
 
             String url = action.execute(request, response);
@@ -44,12 +44,9 @@ public class FrontController extends HttpServlet {
         }
     }
 
-    /**
-     * GETリクエストの処理
-     */
-    public void doGet(
-        HttpServletRequest request, HttpServletResponse response
-    ) throws ServletException, IOException {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         doPost(request, response);
     }
 }

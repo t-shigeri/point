@@ -20,6 +20,6 @@ public class LogoutAction extends Action {
         }
 
         // login.jsp にフォワード（必要ならメッセージ渡すことも可能）
-        return "../login.jsp";
+        return "/scoremanager/login.jsp";
     }
 }
