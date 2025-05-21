@@ -53,7 +53,7 @@
     </div>
 
     <div class="button-box">
-        <a href="student_list.jsp">学生一覧に戻る</a>
+       <a href="${pageContext.request.contextPath}/student/list">一覧に戻る</a>
     </div>
 </div>
 </body>

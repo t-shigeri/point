@@ -51,7 +51,7 @@ public class StudentCreateAction extends HttpServlet {
 
         // DAOを使ってDBに登録処理を実行
         StudentDao studentDao = new StudentDao();
-        studentDao.createStudent(student);
+        studentDao.updateStudent(student);
 
         // 登録完了画面へリダイレクト（リロードで再登録されるのを防ぐ）
         response.sendRedirect(request.getContextPath() + "/student_create_done");

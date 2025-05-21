@@ -38,4 +38,14 @@ public class Student {
 
     public String getClassName() { return className; }
     public void setClassName(String className) { this.className = className; }
+
+	public void setSchoolCd(String string) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	public String getSchoolCd() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
