@@ -3,5 +3,5 @@
 <%@ include file="../../header.jsp"%>
 <h2>ログアウト</h2>
 <p><label for="logout">ログアウトしました</label></p>
-<a href="../login.jsp">ログイン</a>
+<a href="/point/scoremanager/login.jsp">ログイン</a>
 <%@ include file="../../footer.jsp"%>
