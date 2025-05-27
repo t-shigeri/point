@@ -28,15 +28,6 @@
 <!-- 	</servlet-mapping> -->
 
 <servlet>
-    <servlet-name>SubjectListAction</servlet-name>
-    <servlet-class>action.SubjectListAction</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>SubjectListAction</servlet-name>
-    <url-pattern>/SubjectList.action</url-pattern>
-</servlet-mapping>
-
-<servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>scoremanager.LoginAction</servlet-class>
 </servlet>
@@ -62,7 +53,6 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout.action</url-pattern>
 </servlet-mapping>
-
 
 
 
