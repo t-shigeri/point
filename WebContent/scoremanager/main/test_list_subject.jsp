@@ -19,6 +19,9 @@
   </c:if>
 </table>
 
-<p><a href="<c:url value='/test_list'/>">検索画面に戻る</a></p>
+<p>
+  <a href="<c:url value='/testList.action'/>">検索画面に戻る</a>
+</p>
+
 
 <%@ include file="../../footer.jsp" %>
