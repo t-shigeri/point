@@ -13,144 +13,99 @@ import bean.Test;
 
 public class TestDao extends Dao {
 
-    // 全件検索
-    public List<Test> findAll() throws Exception {
+    // filterで引数に該当する条件を設定し成績一覧を取得
+    public List<Test> filter(String enrollmentYear, String classNum, String subjectCd, String noStr) throws Exception {
         List<Test> list = new ArrayList<>();
+        String sql = "SELECT T.STUDENT_NO, T.SUBJECT_CD, T.SCHOOL_CD, T.NO, T.POINT, T.CLASS_NUM, " +
+                     "S.NAME AS STUDENT_NAME, S.ENT_YEAR, " +
+                     "SB.NAME AS SUBJECT_NAME, " +
+                     "SC.NAME AS SCHOOL_NAME " +
+                     "FROM TEST T " +
+                     "JOIN STUDENT S ON T.STUDENT_NO = S.NO " +
+                     "JOIN SUBJECT SB ON T.SUBJECT_CD = SB.CD AND T.SCHOOL_CD = SB.SCHOOL_CD " +
+                     "JOIN SCHOOL SC ON T.SCHOOL_CD = SC.CD " +
+                     "WHERE 1=1 ";
 
-        Connection con = getConnection();
-        String sql = "SELECT * FROM TEST";
-        PreparedStatement st = con.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
-
-        while (rs.next()) {
-            Test test = new Test();
-
-            Student student = new Student();
-            student.setStudentId(rs.getString("STUDENT_NO"));
-            test.setStudent(student);
-
-            Subject subject = new Subject();
-            subject.setCd(rs.getString("SUBJECT_CD"));
-            test.setSubject(subject);
-
-            School school = new School();
-            school.setCd(rs.getString("SCHOOL_CD"));
-            test.setSchool(school);
-
-            test.setNo(rs.getInt("NO"));
-            test.setPoint(rs.getInt("POINT"));
-            test.setClassNum(rs.getString("CLASS_NUM"));
-
-            list.add(test);
+        if (enrollmentYear != null && !enrollmentYear.isEmpty()) {
+            sql += " AND S.ENT_YEAR = ? ";
+        }
+        if (classNum != null && !classNum.isEmpty()) {
+            sql += " AND T.CLASS_NUM = ? ";
+        }
+        if (subjectCd != null && !subjectCd.isEmpty()) {
+            sql += " AND T.SUBJECT_CD = ? ";
+        }
+        if (noStr != null && !noStr.isEmpty()) {
+            sql += " AND T.NO = ? ";
         }
 
-        rs.close();
-        st.close();
-        con.close();
+        sql += " ORDER BY S.ENT_YEAR DESC, T.CLASS_NUM, T.NO ";
 
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            int idx = 1;
+            if (enrollmentYear != null && !enrollmentYear.isEmpty()) {
+                ps.setInt(idx++, Integer.parseInt(enrollmentYear));
+            }
+            if (classNum != null && !classNum.isEmpty()) {
+                ps.setString(idx++, classNum);
+            }
+            if (subjectCd != null && !subjectCd.isEmpty()) {
+                ps.setString(idx++, subjectCd);
+            }
+            if (noStr != null && !noStr.isEmpty()) {
+                ps.setInt(idx++, Integer.parseInt(noStr));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Test test = new Test();
+
+                    // Student情報セット
+                    Student student = new Student();
+                    student.setStudentId(rs.getString("STUDENT_NO"));
+                    student.setName(rs.getString("STUDENT_NAME"));
+                    student.setEnrollmentYear(rs.getInt("ENT_YEAR"));
+                    student.setClassId(rs.getString("CLASS_NUM"));  // クラス番号はTESTテーブルのCLASS_NUM
+                    test.setStudent(student);
+
+                    // Subject情報セット
+                    Subject subject = new Subject();
+                    subject.setCd(rs.getString("SUBJECT_CD"));
+                    subject.setName(rs.getString("SUBJECT_NAME"));
+                    test.setSubject(subject);
+
+                    // School情報セット
+                    School school = new School();
+                    school.setCd(rs.getString("SCHOOL_CD"));
+                    school.setName(rs.getString("SCHOOL_NAME"));
+                    test.setSchool(school);
+
+                    test.setNo(rs.getInt("NO"));
+                    test.setPoint(rs.getInt("POINT"));
+                    test.setClassNum(rs.getString("CLASS_NUM"));
+
+                    list.add(test);
+                }
+            }
+        }
         return list;
     }
 
-    // 1件登録または更新
-    public boolean save(Test test) throws Exception {
-        Connection con = getConnection();
+    // TESTテーブルの回数（NO）一覧を取得
+    public List<Integer> getTestCounts() throws Exception {
+        List<Integer> countList = new ArrayList<>();
+        String sql = "SELECT DISTINCT NO FROM TEST ORDER BY NO";
 
-        String sql = "MERGE INTO TEST (STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO, POINT, CLASS_NUM) "
-                   + "KEY (STUDENT_NO, SUBJECT_CD, NO) "
-                   + "VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement st = con.prepareStatement(sql);
-        st.setString(1, test.getStudent().getNo());
-        st.setString(2, test.getSubject().getCd());
-        st.setString(3, test.getSchoolCd().getCd());
-        st.setInt(4, test.getNo());
-        st.setInt(5, test.getPoint());
-        st.setString(6, test.getClassNum());
+        try (Connection con = getConnection();
+             PreparedStatement st = con.prepareStatement(sql);
+             ResultSet rs = st.executeQuery()) {
 
-        int result = st.executeUpdate();
-        st.close();
-        con.close();
-
-        return result > 0;
-    }
-
-    // 削除
-    public boolean delete(Test test) throws Exception {
-        Connection con = getConnection();
-
-        String sql = "DELETE FROM TEST WHERE STUDENT_NO = ? AND SUBJECT_CD = ? AND NO = ?";
-        PreparedStatement st = con.prepareStatement(sql);
-        st.setString(1, test.getStudent().getNo());
-        st.setString(2, test.getSubject().getCd());
-        st.setInt(3, test.getNo());
-
-        int result = st.executeUpdate();
-        st.close();
-        con.close();
-
-        return result > 0;
+            while (rs.next()) {
+                countList.add(rs.getInt("NO"));
+            }
+        }
+        return countList;
     }
 }
-
-//package dao;
-//
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import bean.Test;
-//
-//public class TestDao extends Dao {
-//
-//    /** 学生番号で検索 */
-//    public List<Test> findByStudentNo(String studentNo) throws Exception {
-//        List<Test> list = new ArrayList<>();
-//        Connection con = getConnection();
-//        String sql = "SELECT STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO, POINT, CLASS_NUM "
-//                   + "FROM TEST WHERE STUDENT_NO = ? ORDER BY NO";
-//        PreparedStatement st = con.prepareStatement(sql);
-//        st.setString(1, studentNo);
-//        ResultSet rs = st.executeQuery();
-//        while (rs.next()) {
-//            Test t = new Test();
-//            t.setStudent(rs.getString("STUDENT_NO"));
-//            t.setClassNum(rs.getString("CLASS_NUM"));
-//            t.setSubject(rs.getString("SUBJECT_CD"));
-//            t.setSchool(rs.getString("SCHOOL_CD"));
-//            t.setNo(rs.getInt("NO"));
-//            t.setPoint(rs.getInt("POINT"));
-//
-//            list.add(t);
-//        }
-//        rs.close();
-//        st.close();
-//        con.close();
-//        return list;
-//    }
-//
-//    /** 科目コードで検索 */
-//    public List<Test> findBySubjectCd(String subjectCd) throws Exception {
-//        List<Test> list = new ArrayList<>();
-//        Connection con = getConnection();
-//        String sql = "SELECT STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO, POINT, CLASS_NUM "
-//                   + "FROM TEST WHERE SUBJECT_CD = ? ORDER BY STUDENT_NO";
-//        PreparedStatement st = con.prepareStatement(sql);
-//        st.setString(1, subjectCd);
-//        ResultSet rs = st.executeQuery();
-//        while (rs.next()) {
-//            Test t = new Test();
-//            t.setStudentNo(rs.getString("STUDENT_NO"));
-//            t.setSubjectCd(rs.getString("SUBJECT_CD"));
-//            t.setSchoolCd(rs.getString("SCHOOL_CD"));
-//            t.setNo(rs.getInt("NO"));
-//            t.setPoint(rs.getInt("POINT"));
-//            t.setClassNum(rs.getString("CLASS_NUM"));
-//            list.add(t);
-//        }
-//        rs.close();
-//        st.close();
-//        con.close();
-//        return list;
-//    }
-//}

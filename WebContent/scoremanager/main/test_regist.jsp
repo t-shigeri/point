@@ -19,7 +19,7 @@ body {
 .container {
 	display: flex;
 	flex-direction: column;
-	height: 100vh; /* 全体の高さを100vhに設定 */
+	height: 100vh;
 	padding: 20px;
 }
 
@@ -38,9 +38,9 @@ body {
 
 .form-section {
 	background-color: #f9f9f9;
-	padding: 10px 15px; /* パディングを減らしてコンパクトに */
+	padding: 10px 15px;
 	border-radius: 5px;
-	margin-bottom: 10px; /* フォームと一覧を近づける */
+	margin-bottom: 10px;
 }
 
 table {
@@ -62,24 +62,22 @@ th {
 .right-align {
 	float: right;
 }
-
-.student-section {
-	display: grid;
-}
 </style>
 </head>
 
 <body>
 	<div class="container">
 		<div class="title-box">成績管理</div>
+
 		<!-- 検索フォーム -->
 		<div class="form-section">
-			<form action="test_regist" method="get">
+			<form action="${pageContext.request.contextPath}/test/regist"
+				method="get">
 				<label for="f1">入学年度:</label> <select name="f1" id="f1">
 					<option value="">--選択--</option>
 					<c:forEach var="year" items="${enrollmentYears}">
 						<option value="${year}"
-							<c:if test="${param.f1 == year}">selected</c:if>>${year}</option>
+							<c:if test="${param.f1 == year.toString()}">selected</c:if>>${year}</option>
 					</c:forEach>
 				</select> <label for="f2">クラス:</label> <select name="f2" id="f2">
 					<option value="">--選択--</option>
@@ -89,52 +87,23 @@ th {
 					</c:forEach>
 				</select> <label for="f3">科目:</label> <select name="f3" id="f3">
 					<option value="">--選択--</option>
-					<c:forEach var="cls" items="${}">
-						<option value="${cls}"
-							<c:if test="${param.f3 == cls}">selected</c:if>>${cls}</option>
+					<c:forEach var="subject" items="${subjectList}">
+						<option value="${subject.cd}"
+							<c:if test="${param.f3 == subject.cd}">selected</c:if>>${subject.name}</option>
 					</c:forEach>
 				</select> <label for="f4">回数:</label> <select name="f4" id="f4">
 					<option value="">--選択--</option>
-					<c:forEach var="cls" items="${}">
-						<option value="${cls}"
-							<c:if test="${param.f4 == cls}">selected</c:if>>${cls}</option>
+					<c:forEach var="num" items="${countList}">
+						<option value="${num}"
+							<c:if test="${param.f4 == num.toString()}">selected</c:if>>${num}</option>
 					</c:forEach>
 				</select> <span class="right-align">
 					<button type="submit">検索</button>
 				</span>
 			</form>
-			<div class="form-section">
-				<table>
-					<thead>
-						<tr>
-							<th>入学年度</th>
-							<th>クラス</th>
-							<th>学生番号</th>
-							<th>氏名</th>
-							<th>点数</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="student" items="${studentList}">
-							<tr>
-								<td>${student.enrollmentYear}</td>
-								<td>${student.classId}</td>
-								<td>${student.studentId}</td>
-								<td>${student.studentName}</td>
-								<td>${student.score}</td>
-							</tr>
-						</c:forEach>
-						<c:if test="${empty studentList}">
-							<tr>
-								<td colspan="5">該当するデータがありません。</td>
-							</tr>
-						</c:if>
-					</tbody>
-				</table>
-			</div>
 		</div>
-	</div>
-</body>
+</div>
 
+</body>
 <%@ include file="../../footer.jsp"%>
 </html>
