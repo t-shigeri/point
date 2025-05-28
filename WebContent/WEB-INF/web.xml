@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns="https://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://xmlns.jcp.org/xml/ns/javaee
                       https://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
@@ -18,43 +19,51 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>hello3</servlet-name> -->
-<!-- 		<servlet-class>chapter4.Hello3</servlet-class> -->
-<!-- 	</servlet> -->
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>hello3</servlet-name> -->
-<!-- 		<url-pattern>/chapter4/hello3</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+	<!-- 	<servlet> -->
+	<!-- 		<servlet-name>hello3</servlet-name> -->
+	<!-- 		<servlet-class>chapter4.Hello3</servlet-class> -->
+	<!-- 	</servlet> -->
+	<!-- 	<servlet-mapping> -->
+	<!-- 		<servlet-name>hello3</servlet-name> -->
+	<!-- 		<url-pattern>/chapter4/hello3</url-pattern> -->
+	<!-- 	</servlet-mapping> -->
 
-<servlet>
-    <servlet-name>Login</servlet-name>
-    <servlet-class>scoremanager.LoginAction</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>Login</servlet-name>
-    <url-pattern>/Login.action</url-pattern>
-</servlet-mapping>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>scoremanager.LoginAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/Login.action</url-pattern>
+	</servlet-mapping>
 
-<servlet>
-    <servlet-name>LoginExecute</servlet-name>
-    <servlet-class>scoremanager.LoginExecuteAction</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>LoginExecute</servlet-name>
-    <url-pattern>/LoginExecute.action</url-pattern>
-</servlet-mapping>
+	<servlet>
+		<servlet-name>LoginExecute</servlet-name>
+		<servlet-class>scoremanager.LoginExecuteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginExecute</servlet-name>
+		<url-pattern>/LoginExecute.action</url-pattern>
+	</servlet-mapping>
 
-<servlet>
-    <servlet-name>Logout</servlet-name>
-    <servlet-class>scoremanager.main.LogoutAction</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>Logout</servlet-name>
-    <url-pattern>/Logout.action</url-pattern>
-</servlet-mapping>
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>scoremanager.main.LogoutAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/Logout.action</url-pattern>
+	</servlet-mapping>
 
-
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>tool.FrontController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<!-- ここで /scoremanager/main/* を受ける -->
+		<url-pattern>/scoremanager/main/*</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- （ここから↓）次の内容をweb.xmlに追加する -->

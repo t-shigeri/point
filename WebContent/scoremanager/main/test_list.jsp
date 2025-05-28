@@ -6,7 +6,7 @@
 <h2>成績参照</h2>
 
 <!-- 科目検索 -->
-<form action="<c:url value='/test_list_subject_execute'/>" method="get">
+<form action="<c:url value='/scoremanager/main/test_list_subject_execute'/>" method="get">
   <fieldset>
     <legend>科目で検索</legend>
     <label>年度:
@@ -38,7 +38,7 @@
 </form>
 
 <!-- 学生番号検索 -->
-<form action="<c:url value='/test_list_student_execute'/>" method="get">
+<form action="<c:url value='/scoremanager/main/test_list_student_execute'/>" method="get">
   <fieldset>
     <legend>学生番号で検索</legend>
     <label>学生番号:
@@ -48,6 +48,6 @@
   </fieldset>
 </form>
 
-<p><a href="<c:url value='/menu'/>">メニューへ戻る</a></p>
+<p><a href="/point/scoremanager/main/menu.jsp">メニューへもどる</a></p>
 
 <%@ include file="../../footer.jsp" %>
