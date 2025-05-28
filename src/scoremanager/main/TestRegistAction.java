@@ -8,53 +8,42 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import bean.School;
-import bean.Subject;
-import bean.Teacher;
-import dao.SchoolDao;
-import dao.SubjectDao;
+import bean.Student;
+import dao.StudentDao;
 
-@WebServlet("")
+@WebServlet("/tst/regist")
 public class TestRegistAction extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    // GETリクエストで呼ばれた場合の処理
+    private StudentDao studentDao = new StudentDao();
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // セッションを取得（無ければnull）
-        HttpSession session = request.getSession(false);
+        // フィルタリングパラメータの取得
+        String enrollmentYear = request.getParameter("f1");
+        String classId = request.getParameter("f2");
+        String studentNo= request.getParameter("f3");
+        String studentName= request.getParameter("f4");
+        String testPoint= request.getParameter("f5");
 
-        // セッションからユーザ(Teacher)情報を取得
-        Teacher teacher = (Teacher) session.getAttribute("user");
 
-        try {
-            // TeacherにセットされているSchool情報を取得
-            School school = teacher.getSchool();
+        // 学生一覧を取得（フィルタリングが必要な場合）
+        List<Student> studentList = studentDao.findAll(enrollmentYear, classId, isEnrolled);
 
-            // School情報が不完全ならDAOを使ってDBから再取得
-            if (school == null || school.getName() == null) {
-                SchoolDao schoolDao = new SchoolDao();
-                school = schoolDao.get(teacher.getSchool().getCd());
-            }
+        // 年度やクラスの選択肢を取得する
+        List<Integer> enrollmentYears = studentDao.getEnrollmentYears();
+        List<String> classList = studentDao.getClassList();
 
-            // SubjectDaoを使い、所属学校の科目一覧を取得
-            SubjectDao subjectDao = new SubjectDao();
-            List<Subject> subjectList = subjectDao.filter(school);
+        // リクエスト属性にデータをセット
+        request.setAttribute("studentList", studentList);
+        request.setAttribute("enrollmentYears", enrollmentYears);
+        request.setAttribute("classList", classList);
 
-            // 取得したデータをリクエスト属性にセット（JSPに渡すため）
-            request.setAttribute("teacherName", teacher.getName());
-            request.setAttribute("school", school);
-            request.setAttribute("subjectList", subjectList);
+        // 学生一覧画面へフォワード
+        System.out.println("Forwarding to: /scoremanager/main/student_list.jsp");
 
-            // teacherMypage.jspにフォワードして表示
-            request.getRequestDispatcher("/test_regist.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            // 例外発生時はServletExceptionとしてスローし、エラーページへ
-            throw new ServletException(e);
-        }
+        request.getRequestDispatcher("/scoremanager/main/student_list.jsp").forward(request, response);
     }
 }

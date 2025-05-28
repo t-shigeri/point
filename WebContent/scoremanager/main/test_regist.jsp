@@ -74,7 +74,7 @@ th {
 		<div class="title-box">成績管理</div>
 		<!-- 検索フォーム -->
 		<div class="form-section">
-			<form action="" method="get">
+			<form action="test_regist" method="get">
 				<label for="f1">入学年度:</label> <select name="f1" id="f1">
 					<option value="">--選択--</option>
 					<c:forEach var="year" items="${enrollmentYears}">
@@ -126,7 +126,7 @@ th {
 						</c:forEach>
 						<c:if test="${empty studentList}">
 							<tr>
-								<td colspan="4">該当するデータがありません。</td>
+								<td colspan="5">該当するデータがありません。</td>
 							</tr>
 						</c:if>
 					</tbody>
