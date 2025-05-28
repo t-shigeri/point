@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Student;
 import bean.Subject;
 import dao.StudentDao;
 import dao.SubjectDao;
@@ -14,16 +13,17 @@ import tool.Action;
 public class TestListAction extends Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // 学生一覧取得（フィルタなし）
+        // 入学年度・クラス番号リスト取得
         StudentDao studentDao = new StudentDao();
-        List<Student> studentList = studentDao.findAll(null, null, null);
-        request.setAttribute("studentList", studentList);
+        request.setAttribute("enrollmentYears", studentDao.getEnrollmentYears());
+        request.setAttribute("classList",       studentDao.getClassList());
 
-        // 科目一覧取得
+        // 科目リスト取得
         SubjectDao subjectDao = new SubjectDao();
         List<Subject> subjectList = subjectDao.findAll();
         request.setAttribute("subjectList", subjectList);
 
-        return "/WEB-INF/jsp/test_list.jsp";
+        // 検索画面 JSP にフォワード
+        return "/scoremanager/main/test_list.jsp";
     }
 }
