@@ -55,16 +55,6 @@
 		<url-pattern>/Logout.action</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>action</servlet-name>
-		<servlet-class>tool.FrontController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>action</servlet-name>
-		<!-- ここで /scoremanager/main/* を受ける -->
-		<url-pattern>/scoremanager/main/*</url-pattern>
-	</servlet-mapping>
-
 
 	<!-- （ここから↓）次の内容をweb.xmlに追加する -->
 	<!-- <filter> -->
