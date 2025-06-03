@@ -1,6 +1,6 @@
 package bean;
 
-public class School extends Teacher {
+public class School {
 	private String cd;
 	private String name;
 
