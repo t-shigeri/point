@@ -1,31 +1,17 @@
 package scoremanager.main;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Subject;
 import dao.StudentDao;
 import dao.SubjectDao;
+import tool.Action; // ←これをimport
 
-@WebServlet("/test/list")
-public class TestListAction extends HttpServlet {
+public class TestListAction extends Action {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            String path = execute(request, response);
-            request.getRequestDispatcher(path).forward(request, response);
-        } catch (Exception e) {
-            throw new ServletException(e);
-        }
-    }
-
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 入学年度・クラス番号リスト取得
         StudentDao studentDao = new StudentDao();

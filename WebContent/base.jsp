@@ -22,7 +22,7 @@
         <span>成績管理</span>
         <ul>
           <li><a href="/point/test/regist">成績登録</a></li>
-          <li><a href="/point/test/list">成績参照</a></li>
+          <li><a href="/point/testList.action">成績参照</a></li>
         </ul>
       </li>
       <li><a href="/point/scoremanager/main/subject_list.action">科目管理</a></li>
