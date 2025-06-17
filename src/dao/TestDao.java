@@ -83,47 +83,46 @@ public class TestDao extends Dao {
 	 * 成績の保存（既存なら更新、なければ挿入）
 	 */
 	public void saveOrUpdate(Test test) throws Exception {
-		String checkSql = "SELECT COUNT(*) FROM TEST WHERE STUDENT_NO = ? AND SUBJECT_CD = ? AND NO = ? AND CLASS_NUM = ?";
+	    String checkSql = "SELECT COUNT(*) FROM TEST WHERE STUDENT_NO = ? AND SUBJECT_CD = ? AND NO = ? AND CLASS_NUM = ?";
 
-		try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(checkSql)) {
-			ps.setString(1, test.getStudent().getStudentId());
-			ps.setString(2, test.getSubject().getCd());
-			ps.setInt(3, test.getNo());
-			ps.setString(4, test.getClassNum());
+	    try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(checkSql)) {
+	        ps.setString(1, test.getStudent().getStudentId());
+	        ps.setString(2, test.getSubject().getCd());
+	        ps.setInt(3, test.getNo());
+	        ps.setString(4, test.getClassNum());
 
-			try (ResultSet rs = ps.executeQuery()) {
-				rs.next();
-				int count = rs.getInt(1);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            rs.next();
+	            int count = rs.getInt(1);
 
-				if (count > 0) {
-					// UPDATE
-					String updateSql = "UPDATE TEST SET POINT = ? WHERE STUDENT_NO = ? AND SUBJECT_CD = ? AND NO = ? AND CLASS_NUM = ?";
-					try (PreparedStatement ups = con.prepareStatement(updateSql)) {
-						ups.setInt(1, test.getPoint());
-						ups.setString(2, test.getStudent().getStudentId());
-						ups.setString(3, test.getSubject().getCd());
-						ups.setInt(4, test.getNo());
-						ups.setString(5, test.getClassNum());
-						ups.executeUpdate();
-					}
-				} else {
-					// INSERT
-					String schoolCd = test.getSchool() != null ? test.getSchool().getCd()
-							: getSchoolCdByStudentId(test.getStudent().getStudentId(), con);
-					String insertSql = "INSERT INTO TEST (STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO, POINT, CLASS_NUM) VALUES (?, ?, ?, ?, ?, ?)";
-					try (PreparedStatement ins = con.prepareStatement(insertSql)) {
-						ins.setString(1, test.getStudent().getStudentId());
-						ins.setString(2, test.getSubject().getCd());
-						ins.setString(3, schoolCd);
-						ins.setInt(4, test.getNo());
-						ins.setInt(5, test.getPoint());
-						ins.setString(6, test.getClassNum());
-						ins.executeUpdate();
-					}
-				}
-			}
-		}
+	            if (count > 0) {
+	                // UPDATE
+	                String updateSql = "UPDATE TEST SET POINT = ? WHERE STUDENT_NO = ? AND SUBJECT_CD = ? AND NO = ? AND CLASS_NUM = ?";
+	                try (PreparedStatement ups = con.prepareStatement(updateSql)) {
+	                    ups.setInt(1, test.getPoint());
+	                    ups.setString(2, test.getStudent().getStudentId());
+	                    ups.setString(3, test.getSubject().getCd());
+	                    ups.setInt(4, test.getNo());
+	                    ups.setString(5, test.getClassNum());
+	                    ups.executeUpdate();
+	                }
+	            } else {
+	                // INSERT
+	                String insertSql = "INSERT INTO TEST (STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO, POINT, CLASS_NUM) VALUES (?, ?, ?, ?, ?, ?)";
+	                try (PreparedStatement ins = con.prepareStatement(insertSql)) {
+	                    ins.setString(1, test.getStudent().getStudentId());
+	                    ins.setString(2, test.getSubject().getCd());
+	                    ins.setString(3, test.getSchool().getCd());  // schoolCdをセット
+	                    ins.setInt(4, test.getNo());
+	                    ins.setInt(5, test.getPoint());
+	                    ins.setString(6, test.getClassNum());
+	                    ins.executeUpdate();
+	                }
+	            }
+	        }
+	    }
 	}
+
 
 	/**
 	 * 学生IDから学校コードを取得する（内部用）

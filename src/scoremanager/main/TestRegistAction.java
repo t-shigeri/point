@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Test;
@@ -26,6 +27,7 @@ public class TestRegistAction extends HttpServlet {
     private TestDao testDao = new TestDao();
     private StudentDao studentDao = new StudentDao();
     private SubjectDao subjectDao = new SubjectDao();
+
 
     // GETは検索処理（一覧取得）
     @Override
@@ -43,6 +45,8 @@ public class TestRegistAction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8"); // 文字化け防止
+
+
 
             int index = 0;
             while (true) {
@@ -73,6 +77,11 @@ public class TestRegistAction extends HttpServlet {
 
                 test.setNo(no);
                 test.setPoint(point);
+
+                String schoolCd = testDao.getSchoolCdByStudentId(studentNo);
+                School school = new School();
+                school.setCd(schoolCd);
+                test.setSchool(school);
 
                 // 登録（insert or update）処理
                 testDao.saveOrUpdate(test);
@@ -122,6 +131,8 @@ public class TestRegistAction extends HttpServlet {
                 s.setPoint(point);
             }
         }
+
+
 
         request.setAttribute("enrollmentYears", studentDao.getEnrollmentYears());
         request.setAttribute("classList", studentDao.getClassList());
