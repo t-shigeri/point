@@ -48,4 +48,14 @@ public class Student {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+
+	private Integer point;  // または int point;
+
+	public Integer getPoint() {
+	    return point;
+	}
+
+	public void setPoint(Integer point) {
+	    this.point = point;
+	}
 }

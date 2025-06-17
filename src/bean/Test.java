@@ -8,8 +8,6 @@ public class Test {
     private int no;             // NO
     private int point;          // POINT
 
-    public Test() {}
-
     public Student getStudent() {
         return student;
     }

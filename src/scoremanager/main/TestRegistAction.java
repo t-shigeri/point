@@ -1,6 +1,9 @@
 package scoremanager.main;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Student;
+import bean.Subject;
+import bean.Test;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
@@ -21,10 +27,9 @@ public class TestRegistAction extends HttpServlet {
     private StudentDao studentDao = new StudentDao();
     private SubjectDao subjectDao = new SubjectDao();
 
-    // GETリクエスト
+    // GETは検索処理（一覧取得）
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             execute(request, response);
             request.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(request, response);
@@ -33,43 +38,95 @@ public class TestRegistAction extends HttpServlet {
         }
     }
 
-    // POSTリクエスト（必要なら）
+    // POSTは登録処理
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            execute(request, response);
-            request.getRequestDispatcher("/scremanager/main/test_regist.jsp").forward(request, response);
+            request.setCharacterEncoding("UTF-8"); // 文字化け防止
+
+            int index = 0;
+            while (true) {
+                String studentNo = request.getParameter("studentList[" + index + "].studentNo");
+                String pointStr = request.getParameter("studentList[" + index + "].point");
+                if (studentNo == null || pointStr == null) {
+                    break; // データがなくなったら終了
+                }
+                int point = Integer.parseInt(pointStr);
+
+                String enrollmentYear = request.getParameter("f1");
+                String classNum = request.getParameter("f2");
+                String subjectCd = request.getParameter("f3");
+                String noStr = request.getParameter("f4");
+                int no = Integer.parseInt(noStr);
+
+                Test test = new Test();
+
+                Student student = new Student();
+                student.setStudentId(studentNo);
+                test.setStudent(student);
+
+                test.setClassNum(classNum);
+
+                Subject subject = new Subject();
+                subject.setCd(subjectCd);
+                test.setSubject(subject);
+
+                test.setNo(no);
+                test.setPoint(point);
+
+                // 登録（insert or update）処理
+                testDao.saveOrUpdate(test);
+
+                index++;
+            }
+
+            // 登録後は検索結果を再表示（POST-Redirect-GET）
+            String redirectUrl = request.getContextPath() + "/test/regist"
+                    + "?f1=" + request.getParameter("f1")
+                    + "&f2=" + request.getParameter("f2")
+                    + "&f3=" + request.getParameter("f3")
+                    + "&f4=" + request.getParameter("f4");
+            response.sendRedirect(redirectUrl);
+
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
 
+    // 検索処理の共通部分
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String enrollmentYear = request.getParameter("f1");
+        String classNum = request.getParameter("f2");
+        String subjectCd = request.getParameter("f3");
+        String no = request.getParameter("f4");
 
+        List<Student> studentList = null;
+        if (enrollmentYear != null && !enrollmentYear.isEmpty()
+                && classNum != null && !classNum.isEmpty()) {
+            // 在籍中の学生だけ取得する場合は"t"を渡す
+            studentList = studentDao.findAll(enrollmentYear, classNum, "t");
+        }
+        request.setAttribute("studentList", studentList);
 
+        if (studentList != null && subjectCd != null && !subjectCd.isEmpty() && no != null && !no.isEmpty()) {
+            List<Test> testList = testDao.filter(enrollmentYear, classNum, subjectCd, no);
+            Map<String, Integer> scoreMap = new HashMap<>();
+            for (Test test : testList) {
+                if (test.getStudent() != null) {
+                    scoreMap.put(test.getStudent().getStudentId(), test.getPoint());
+                }
+            }
+            // Student に point をセットする (Student クラスに setPoint メソッドを用意してください)
+            for (Student s : studentList) {
+                Integer point = scoreMap.get(s.getStudentId());
+                s.setPoint(point);
+            }
+        }
 
+        request.setAttribute("enrollmentYears", studentDao.getEnrollmentYears());
+        request.setAttribute("classList", studentDao.getClassList());
+        request.setAttribute("subjectList", subjectDao.findAll());
 
-//    // 実際の処理はここにまとめる
-//    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//        // 検索フォームのパラメータ（セレクトボックスのname属性に合わせてf1～f4）
-//        String enrollmentYear = request.getParameter("f1");
-//        String classNum = request.getParameter("f2");
-//        String subjectCd = request.getParameter("f3");
-//        String no = request.getParameter("f4");
-//
-//        // 検索条件に該当する成績一覧取得
-//        List<Test> testList = testDao.filter(enrollmentYear, classNum, subjectCd, no);
-//        request.setAttribute("testList", testList);
-//
-//        // セレクトボックス用データを取得しリクエスト属性にセット
-//        List<Integer> enrollmentYears = studentDao.getEnrollmentYears();
-//        List<String> classList = studentDao.getClassList();
-//        List<Subject> subjectList = subjectDao.findAll();
-//        List<Integer> countList = testDao.getTestCounts();
-//
-//        request.setAttribute("enrollmentYears", enrollmentYears);
-//        request.setAttribute("classList", classList);
-//        request.setAttribute("subjectList", subjectList);
-//        request.setAttribute("countList", countList);
-//    }
+        request.setAttribute("countList", java.util.Arrays.asList(1, 2, 3, 4, 5));
+    }
 }
