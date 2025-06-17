@@ -23,7 +23,6 @@ public class StudentUpdateAction extends HttpServlet {
         // リクエストパラメータから学生番号を取得
         String no = request.getParameter("no");
         if (no == null || no.isEmpty()) {
-            // 学生番号が指定されていない場合は一覧へリダイレクト
             response.sendRedirect(request.getContextPath() + "/student/list");
             return;
         }
@@ -41,6 +40,6 @@ public class StudentUpdateAction extends HttpServlet {
         request.setAttribute("classList", classList);
 
         // 更新画面へフォワード
-        request.getRequestDispatcher("/scoremanager/main/student_update.jsp").forward(request, response);
+        request.getRequestDispatcher("/point/scoremanager/main/student_update.jsp").forward(request, response);
     }
 }
