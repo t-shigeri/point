@@ -15,6 +15,7 @@ import dao.SubjectDao;
 @WebServlet("/scoremanager/main/subject_list.action")
 public class SubjectListAction extends HttpServlet {
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 
@@ -32,7 +33,8 @@ public class SubjectListAction extends HttpServlet {
 	}
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response); // POSTでもGETと同様の処理をする
     }

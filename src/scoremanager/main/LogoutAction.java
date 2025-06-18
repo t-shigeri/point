@@ -8,7 +8,8 @@ import javax.servlet.http.HttpSession;
 import tool.Action;
 
 public class LogoutAction extends Action {
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // 文字化け防止のためにリクエストの文字エンコーディングを設定
         request.setCharacterEncoding("UTF-8");
