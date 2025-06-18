@@ -67,7 +67,7 @@
         <div class="menu-category">成績管理</div>
         <a href="/point/test/regist" class="menu-link">📝 成績登録</a>
         <a href="/point/testList.action" class="menu-link">📊 成績参照</a>
-        <a href="subject_list.jsp" class="menu-link">📚 科目管理</a>
+        <a href="subject_list.action" class="menu-link">📚 科目管理</a>
     </div>
 </div>
 
