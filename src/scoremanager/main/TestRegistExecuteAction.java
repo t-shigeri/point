@@ -63,7 +63,7 @@ public class TestRegistExecuteAction extends HttpServlet {
                 index++;
             }
 
-            response.sendRedirect(request.getContextPath() + "/test/regist");
+            request.getRequestDispatcher("/scoremanager/main/test_regist_done.jsp").forward(request, response);
 
         } catch (Exception e) {
             throw new ServletException(e);
