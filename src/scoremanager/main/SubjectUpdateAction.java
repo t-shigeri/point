@@ -2,6 +2,7 @@ package scoremanager.main;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,34 +17,30 @@ import dao.SubjectDao;
 
 @WebServlet("/scoremanager/main/subject_update.action")
 public class SubjectUpdateAction extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        try {
-            req.setCharacterEncoding("UTF-8");
-            String cd = req.getParameter("no");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-            HttpSession session = req.getSession();
+        try {
+            request.setCharacterEncoding("UTF-8");
+
+            String cd = request.getParameter("cd");
+            HttpSession session = request.getSession();
             Teacher teacher = (Teacher) session.getAttribute("teacher");
-            if (teacher == null) {
-                resp.sendRedirect(req.getContextPath() + "/scoremanager/login.jsp");
-                return;
-            }
             School school = teacher.getSchool();
 
-
             SubjectDao dao = new SubjectDao();
-
             Subject subject = dao.get(cd, school);
-            req.setAttribute("subject", subject);
-            req.getRequestDispatcher("/point/scoremanager/main/SubjectUpdateExecute.action").forward(req, resp);
+
+
+
+            request.setAttribute("subject", subject);
         } catch (Exception e) {
             e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute("error", "科目情報の取得に失敗しました。");
         }
+
+        RequestDispatcher rd = request.getRequestDispatcher("/scoremanager/main/subject_update.jsp");
+        rd.forward(request, response);
     }
-
 }
-

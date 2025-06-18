@@ -15,8 +15,7 @@ import bean.Subject;
 public class SubjectDeleteAction extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cd = request.getParameter("cd");
-        String schoolCd = request.getParameter("scho:olCd");
-
+        String schoolCd = request.getParameter("schoolCd");
         if(cd == null || cd.isEmpty() || schoolCd == null || schoolCd.isEmpty()){
             request.setAttribute("errorMessage", "パラメータが不足しています。");
             request.getRequestDispatcher("/error.jsp").forward(request, response);

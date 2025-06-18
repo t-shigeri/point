@@ -36,7 +36,7 @@
                 <td>${subject.cd}</td>
                 <td>${subject.name}</td>
                 <td>
-                   <a href="/point/scoremanager/main/subject_update.action?cd=${subject.cd}&schoolCd=${subject.school.cd}">編集</a>
+                  <a href="/point/scoremanager/main/subject_update.action?cd=${subject.cd}&schoolCd=${subject.school.cd}">編集</a>
                     <a href="/point/scoremanager/main/subject_delete.action?cd=${subject.cd}&schoolCd=${subject.school.cd}">削除</a>
                 </td>
             </tr>
