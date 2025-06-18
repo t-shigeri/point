@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
 import bean.Subject;
+import dao.SubjectDao;
 
 @WebServlet("/scoremanager/main/subject_delete.action")
 public class SubjectDeleteAction extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cd = request.getParameter("cd");
         String schoolCd = request.getParameter("schoolCd");
+
         if(cd == null || cd.isEmpty() || schoolCd == null || schoolCd.isEmpty()){
             request.setAttribute("errorMessage", "パラメータが不足しています。");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
@@ -26,9 +28,14 @@ public class SubjectDeleteAction extends HttpServlet {
             School school = new School();
             school.setCd(schoolCd);
 
-            Subject subject = new Subject();
-            subject.setCd(cd);
-            subject.setSchool(school);
+            SubjectDao dao = new SubjectDao();
+            Subject subject = dao.get(cd, school);  // ← データベースから取得（name含む）
+
+            if (subject == null) {
+                request.setAttribute("errorMessage", "該当する科目が見つかりません。");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
 
             request.setAttribute("subject", subject);
             request.getRequestDispatcher("/scoremanager/main/subject_delete.jsp").forward(request, response);

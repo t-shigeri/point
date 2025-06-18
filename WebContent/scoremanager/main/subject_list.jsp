@@ -11,18 +11,7 @@
     <h1>科目一覧</h1>
 
     <a href="/point/scoremanager/main/subject_create.action">科目新規作成</a> <br><br>
-<%
-    Object t = session.getAttribute("teacher");
-    if (t != null) {
-%>
-        <p>user <%= t %></p>
-<%
-    } else {
-%>
-        <p>してない</p>
-<%
-    }
-%>
+
     <table border="1">
         <tr>
             <th>学校コード</th>
