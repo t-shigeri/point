@@ -126,14 +126,7 @@
 
 <body>
   <!-- ヘッダー -->
-  <header class="header">
-    <div class="user-info">
-      <c:if test="${not empty sessionScope.teacher}">
-        ${sessionScope.teacher.name} 様
-        <a href="<c:url value='/scoremanager/main/Logout.action'/>">ログアウト</a>
-      </c:if>
-    </div>
-  </header>
+
 
   <!-- サイドバー -->
   <div class="sidebar">
