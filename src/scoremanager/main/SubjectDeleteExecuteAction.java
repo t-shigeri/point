@@ -13,7 +13,8 @@ import dao.SubjectDao;
 
 @WebServlet("/scoremanager/main/subject_delete_execute.action")
 public class SubjectDeleteExecuteAction extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // パラメータから値を取得
             String cd = request.getParameter("cd");
